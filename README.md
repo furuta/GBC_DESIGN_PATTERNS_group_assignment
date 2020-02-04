@@ -1,0 +1,2 @@
+# GBC_DESIGN_PATTERNS_group_assignment
+For the task of DESIGN PATTERNS FOR BLOCKCHAIN at GBC
