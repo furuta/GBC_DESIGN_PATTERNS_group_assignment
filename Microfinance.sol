@@ -21,6 +21,7 @@ contract MicroFinance {
         require(_loan <= 2 ether, "Max 2 ethers");
         require(_address != address(0), "address is zero address");
         Loaner storage loaner = loaners[_address];
+        require(loaner.loan <= 2 ether, "Max loan 2 ethers");
         loaner.loan = _loan + 0.02 ether;
         loanerAccts.push(_address);
     }
