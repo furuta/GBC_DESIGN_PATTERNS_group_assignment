@@ -1,0 +1,51 @@
+:root {
+  --color-primary: #ff8ba7;
+  --color-primary-dark: #eb2f64;
+  --color-secondary: #ffc6c7;
+  --color-content-primary: #faeee7;
+  --color-content-secondary: #c3f0ca;
+  --color-content-secondary-dark: #82e892;
+  --color-white: #fff;
+  --color-grey-pink: #e78888;
+  --color-white-grey: #f7f7f7;
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, .06);
+  --shadow-light-1: 0 1.5rem 4rem rgba(0, 0, 0, .15);
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
+  --line: 1px solid var(--color-grey-light-2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; //1 rem = 10px, 10px/16px
+  background-image: linear-gradient(to right bottom, var(--color-primary), var(--color-secondary));
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-grey-dark-2);
+  min-height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

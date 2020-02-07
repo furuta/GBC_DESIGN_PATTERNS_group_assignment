@@ -1,0 +1,7 @@
+.funds {
+    background-color: var(--color-white-grey);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    grid-gap: 7rem;
+    padding: 10rem 10rem;
+}

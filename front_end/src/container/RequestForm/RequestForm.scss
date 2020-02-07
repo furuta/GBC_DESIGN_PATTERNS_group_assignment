@@ -1,0 +1,56 @@
+@import "../../assets/sass/_button.scss";
+
+.rqform {
+    margin-top: 5rem;
+    margin: 5rem auto;
+    padding: 4rem;
+    width: 70rem;
+    background-color: var(--color-grey-pink);
+    text-align: center;
+    box-shadow: var(--shadow-dark);
+}
+
+.flex {
+    display: flex;
+}
+
+.rqform_step {
+    display: flex;
+    flex: 0 0 40%;
+    flex-direction: column;
+}
+
+.rqform_content {
+    flex: 0 0 60%;
+}
+
+.fade-enter {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-enter-done {
+    opacity: 1;
+    display: block;
+}
+
+.fade-exit-done {
+    opacity: 0;
+    display: none;
+}
