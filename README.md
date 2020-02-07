@@ -4,7 +4,7 @@ For the task of DESIGN PATTERNS FOR BLOCKCHAIN at GBC
 ## Team
 34ASIAN
 
-## Member
+## Members:
 - Nguyen Anh Tuan Dinh
 - Lobsang Tenzin
 - Tomohiro Furuta
