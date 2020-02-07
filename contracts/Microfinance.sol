@@ -1,4 +1,4 @@
-pragma solidity ^0.5.9;
+pragma solidity ^0.5.8;
 import '@openzeppelin/contracts/math/SafeMath.sol';
 
 contract MicroFinance {
@@ -17,6 +17,8 @@ contract MicroFinance {
     mapping(address => uint) loanerWallet;
     mapping(address => uint) lenderWallet;
     mapping(address => mapping(address => uint)) loaners;
+    mapping(address => address[]) fundedPeople;
+    mapping(address => address[]) debtors;
     address[] public lenderAccts;
     
     function loanRequest(uint loan) public {
@@ -40,6 +42,8 @@ contract MicroFinance {
         loanerWallet[to] = loanerWallet[to].add(msg.value);
         requested[to].fundedValue = requested[to].fundedValue.add(msg.value);
         loaners[to][msg.sender] = loaners[to][msg.sender].add(msg.value);
+        debtors[msg.sender].push(to);
+        fundedPeople[to].push(msg.sender);
         lenderAccts.push(msg.sender);
     }
     function getRequestedValue(address to) public view returns(uint){
@@ -58,6 +62,12 @@ contract MicroFinance {
         loaners[msg.sender][to] = loaners[msg.sender][to].sub(msg.value);
         lenderWallet[to] = lenderWallet[to].add(msg.value);
         requested[msg.sender].fundedValue = requested[msg.sender].fundedValue.sub(msg.value);
+    }
+    function getFundedPeople() public view returns(address[] memory){
+        return fundedPeople[msg.sender];
+    }
+    function getDebtors() public view returns(address[] memory){
+        return debtors[msg.sender];
     }
     function getLenderWallet() public view returns(uint){
         return lenderWallet[msg.sender];
