@@ -10,48 +10,54 @@ contract MicroFinance {
     }
     struct Request {
         uint value;
+        uint fundedValue;
         bool status;
     }
-    struct Lenders{
-        address Loaner;
-        uint amount;
-    }
-    // mapping(key_type => value_type)
     mapping(address => Request) requested;
     mapping(address => uint) loanerWallet;
     mapping(address => uint) lenderWallet;
-    // mapping(address => Lenders) lenders;
-    mapping(address => address) loaners;
-    // mapping(uint => lenders) amountLended;
-    // address[] public loanerAccts;
-    // address[] public lenderAccts;
+    mapping(address => mapping(address => uint)) loaners;
+    address[] public lenderAccts;
     
     function loanRequest(uint loan) public {
-        bool isExistedRequest = requested[msg.sender].status;
-        require( isExistedRequest == false,"already requested");
-        Request memory request = Request(loan,true);
-        requested[msg.sender] = request;
+        require(loan <= 2 ether,'');
+        require(requested[msg.sender].fundedValue == 0, 'you have to pay at first');
+        
+        requested[msg.sender] = Request(loan ,0 ,true);
+    }
+    function changeLoanRequestStatus() public {
+        require(requested[msg.sender].value > 0, 'There is no request');
+        requested[msg.sender].status = !requested[msg.sender].status;
+    }
+    function getLoanRequestStatus() public view returns(bool) {
+        return requested[msg.sender].status;
     }
     function fund(address to) public payable{
-        uint money = requested[to].value;
-        require(money == msg.value,"not enough fund");
-        bool fundStatus = requested[to].status;
-        require(fundStatus == true,"already had money");
-        loanerWallet[to] = msg.value;
-        loaners[to] = msg.sender;
-        requested[to].status = false;
+        require(msg.value > 0, '0 value');
+        require((requested[to].value - requested[to].fundedValue) >= msg.value,"not enough fund");
+        require(requested[to].status == true,"the request do not except any more");
+        
+        loanerWallet[to] = loanerWallet[to].add(msg.value);
+        requested[to].fundedValue = requested[to].fundedValue.add(msg.value);
+        loaners[to][msg.sender] = loaners[to][msg.sender].add(msg.value);
+        lenderAccts.push(msg.sender);
     }
-    function getMoneyRequested(address to) public view returns(uint){
+    function getRequestedValue(address to) public view returns(uint){
         return requested[to].value;
+    }
+    function getFundedValue(address to) public view returns(uint){
+        return requested[to].fundedValue;
     }
     function getStatusRequested(address to) public view returns(bool){
         return requested[to].status;
     }
-    function payBack() public payable{
-        uint money = requested[msg.sender].value;
-        require(money.add(0.02 ether)==msg.value,"not enough money");
-        address lenderAddr = loaners[msg.sender];
-        lenderWallet[lenderAddr] += money.add(0.02 ether);
+    function payBack(address to) public payable{
+        uint money = loaners[msg.sender][to];
+        require(loaners[msg.sender][to].div(100).mul(2).add(money) >= msg.value,"not enough money");
+
+        loaners[msg.sender][to] = loaners[msg.sender][to].sub(msg.value);
+        lenderWallet[to] = lenderWallet[to].add(msg.value);
+        requested[msg.sender].fundedValue = requested[msg.sender].fundedValue.sub(msg.value);
     }
     function getLenderWallet() public view returns(uint){
         return lenderWallet[msg.sender];
@@ -67,10 +73,14 @@ contract MicroFinance {
         receiver.transfer(money);
     }
     function withDrawLoaners() public {
+        require(requested[msg.sender].status == false, 'change status to false to withdraw the money');
         address payable receiver = msg.sender;
         uint money = loanerWallet[receiver];
         require(money != 0,"nothing to withdraw");
         loanerWallet[receiver] = 0;
         receiver.transfer(money);
-    }   
+    }
+    function countLender() public view returns(uint) {
+        return lenderAccts.length;
+    }
 }
