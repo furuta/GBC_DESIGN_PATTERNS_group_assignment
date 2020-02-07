@@ -20,6 +20,8 @@ Creating a platform where funders can give out loans which are not worth the cos
 - Wallet of the people getting the loan and recieve funds: mapping(address => uint) loanerWallet;
 - Wallet of the funder to recieve funds: mapping(address => uint) lenderWallet; 
 - To track the adress of loaners: mapping(address => mapping(address => uint)) loaners;
+- To keep track of how many people has been funded by an address: mapping(address => address[]) fundedPeople;
+- To keep track which address still owes money: mapping(address => address[]) debtors;
 - To track how many people has a lender funded:  address[] public lenderAccts;
 
 ## Off-chain Data
@@ -40,6 +42,8 @@ Creating a platform where funders can give out loans which are not worth the cos
 - getRequestedValue(address to) public view returns(uint);
 - getFundedValue(address to) public view returns(uint);
 - getStatusRequested(address to) public view returns(bool);
+- getFundedPeople() public view returns(address[] memory);
+- getDebtors() public view returns(address[] memory);
 - getLenderWallet() public view returns(uint);
 - getLoannerWallet() public view returns(uint);
 - countLender() public view returns(uint);
