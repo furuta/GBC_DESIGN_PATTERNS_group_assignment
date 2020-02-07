@@ -5,10 +5,12 @@ import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
-
+import Web3ContextProvider from "./web3-context";
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Web3ContextProvider>
+      <App />
+    </Web3ContextProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

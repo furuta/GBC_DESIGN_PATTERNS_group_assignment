@@ -16,6 +16,10 @@
     display: block;
     transition: all 0.3s;
 
+    &-gray {
+      background-color: var(--color-content-secondary-dark);
+    }
+
     &::-webkit-input-placeholder {
       color: --color-grey-dark-2;
     }
@@ -40,23 +44,30 @@
     transition: all 0.3s;
   }
 
-  &__input:placeholder-shown + &__label {
+  &__input:placeholder-shown+&__label {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-4rem);
   }
 }
+
 .form_animation {
-  -webkit-animation: fadein 0.75s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 0.75s; /* Firefox < 16 */
-  -ms-animation: fadein 0.75s; /* Internet Explorer */
-  -o-animation: fadein 0.75s; /* Opera < 12.1 */
+  -webkit-animation: fadein 0.75s;
+  /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.75s;
+  /* Firefox < 16 */
+  -ms-animation: fadein 0.75s;
+  /* Internet Explorer */
+  -o-animation: fadein 0.75s;
+  /* Opera < 12.1 */
   animation: fadein 0.75s;
 }
+
 @keyframes fadein {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

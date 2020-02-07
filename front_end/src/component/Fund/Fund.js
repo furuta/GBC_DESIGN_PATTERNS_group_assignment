@@ -1,23 +1,35 @@
 import React from "react";
+import web3 from "web3";
 import "./Fund.scss";
 function Fund(props) {
+  const [fundValue, setFundValue] = React.useState("");
   return (
     <div className="fund">
-      <div className="fund_title">Leo Dinh</div>
+      <div className="fund_title">{props.name}</div>
       <div className="fund_reason">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat
-        </p>
+        <span>Reason: </span>
+        <p>{props.reason}</p>
       </div>
       <div className="fund_money">
-        <span>1 Ether</span>
+        <span>{web3.utils.fromWei(props.value, "ether")} Ether</span>
       </div>
-      <button className="fund_btn">
-        <span>fund</span>
-      </button>
+      <div className="fund_money">
+        <span>Funded: {props.fundedValue} Ether</span>
+      </div>
+      <div className="fund-form">
+        <input
+          type="number"
+          id="name"
+          className="form__input form__input-gray"
+          placeholder="Value"
+          value={fundValue}
+          onChange={e => setFundValue(e.target.value)}
+          required
+        />
+        <button className="fund_btn">
+          <span>fund</span>
+        </button>
+      </div>
     </div>
   );
 }

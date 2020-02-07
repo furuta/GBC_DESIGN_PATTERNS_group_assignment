@@ -1,14 +1,16 @@
 import React from "react";
 import "./RequestForm.scss";
+import web3 from "web3";
 import Step from "../../component/formStep/formStep";
 import PersonalInfo from "../../component/form/personalInfo/personalInfo";
 import LoanInfo from "../../component/form/loanInfo/loanInfo";
-import { CSSTransition } from "react-transition-group";
+import contractInfo from "../../contractInfo";
+import { database } from "../../firebase";
 const stepsList = [
   { id: 1, content: "Personal Information" },
   { id: 2, content: "Loan" }
 ];
-function RequestForm() {
+function RequestForm(props) {
   const [step, setStep] = React.useState(1);
   const [infor, setInfor] = React.useState({
     name: "",
@@ -17,6 +19,7 @@ function RequestForm() {
     amountOfMoney: "",
     reason: ""
   });
+  const [loading, setLoading] = React.useState(false);
   const handleInforChange = input => e => {
     const updatedInfo = { ...infor };
     updatedInfo[input] = e.target.value;
@@ -30,6 +33,17 @@ function RequestForm() {
       let newStep = step - 1;
       setStep(newStep);
     }
+  };
+  const requestFund = async () => {
+    setLoading(true);
+    await contractInfo.methods
+      .loanRequest(web3.utils.toWei(infor.amountOfMoney))
+      .send({ from: props.account })
+      .once("receipt", async result => {
+        console.log(result);
+        await database.ref("requests/" + props.account).set(infor);
+        setLoading(false);
+      });
   };
   const { name, address, phone, amountOfMoney, reason } = infor;
   let content;
@@ -72,8 +86,8 @@ function RequestForm() {
     );
   } else {
     action = (
-      <button className="btn btn--white" onClick={processStep}>
-        Submit
+      <button className="btn btn--white" onClick={requestFund}>
+        {loading ? "Sending..." : "Submit"}
       </button>
     );
   }
