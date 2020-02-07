@@ -8,57 +8,69 @@ contract MicroFinance {
     struct Loaner{
         uint loan;
     }
+    struct Request {
+        uint value;
+        bool status;
+    }
     struct Lenders{
         address Loaner;
+        uint amount;
     }
     // mapping(key_type => value_type)
-    mapping(address => Loaner) loaners;
-    mapping(address => Lenders) lenders;
-    address[] public loanerAccts;
-    address[] public lenderAccts;
-
-    function setLoaner(address _address, uint _loan) public {
-        require(_loan <= 2 ether, "Max 2 ethers");
-        require(_address != address(0), "address is zero address");
-        Loaner storage loaner = loaners[_address];
-        require(loaner.loan <= 2 ether, "Max loan 2 ethers");
-        loaner.loan = _loan + 0.02 ether;
-        loanerAccts.push(_address);
-    }
+    mapping(address => Request) requested;
+    mapping(address => uint) loanerWallet;
+    mapping(address => uint) lenderWallet;
+    // mapping(address => Lenders) lenders;
+    mapping(address => address) loaners;
+    // mapping(uint => lenders) amountLended;
+    // address[] public loanerAccts;
+    // address[] public lenderAccts;
     
-    function getLoaners() public view returns(address [] memory){
-        return loanerAccts;
+    function loanRequest(uint loan) public {
+        bool isExistedRequest = requested[msg.sender].status;
+        require( isExistedRequest == false,"already requested");
+        Request memory request = Request(loan,true);
+        requested[msg.sender] = request;
     }
-    
-    function getLoaner(address _loaner) public view returns(uint) {
-        require(_loaner != address(0), "address is zero address");
-        return (loaners[_loaner].loan);
-        
+    function fund(address to) public payable{
+        uint money = requested[to].value;
+        require(money == msg.value,"not enough fund");
+        bool fundStatus = requested[to].status;
+        require(fundStatus == true,"already had money");
+        loanerWallet[to] = msg.value;
+        loaners[to] = msg.sender;
+        requested[to].status = false;
     }
-    function payLoan(address _loaner, uint _pay) public payable {
-        loaners[_loaner].loan.sub(_pay);
+    function getMoneyRequested(address to) public view returns(uint){
+        return requested[to].value;
     }
-    
-    function countLoaner() public view returns(uint){
-        return loanerAccts.length;
+    function getStatusRequested(address to) public view returns(bool){
+        return requested[to].status;
     }
-    
-    function setLender(address _address, address _loaner) public {
-        require(_address != address(0), "address is zero address");
-        Lenders storage lender = lenders[_address];
-        lender.Loaner = _loaner;
-        lenderAccts.push(_address);
+    function payBack() public payable{
+        uint money = requested[msg.sender].value;
+        require(money.add(0.02 ether)==msg.value,"not enough money");
+        address lenderAddr = loaners[msg.sender];
+        lenderWallet[lenderAddr] += money.add(0.02 ether);
     }
-    function getLender() public view returns(address [] memory){
-        return lenderAccts;
+    function getLenderWallet() public view returns(uint){
+        return lenderWallet[msg.sender];
     }
-    function getLendersLoan(address _lender) public view returns(address) {
-        require(_lender != address(0), "address is zero address");
-        return (lenders[_lender].Loaner);
-        
+    function getLoannerWallet() public view returns(uint){
+        return loanerWallet[msg.sender];
     }
-    function countLender() public view returns(uint){
-        return lenderAccts.length;
+    function withDrawLenders() public {
+        address payable receiver = msg.sender;
+        uint money = lenderWallet[receiver];
+        require(money != 0,"nothing to withdraw");
+        lenderWallet[receiver] = 0;
+        receiver.transfer(money);
     }
-    
+    function withDrawLoaners() public {
+        address payable receiver = msg.sender;
+        uint money = loanerWallet[receiver];
+        require(money != 0,"nothing to withdraw");
+        loanerWallet[receiver] = 0;
+        receiver.transfer(money);
+    }   
 }
