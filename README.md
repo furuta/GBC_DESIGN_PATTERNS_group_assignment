@@ -16,24 +16,33 @@ Creating a platform where funders can give out loans which are not worth the cos
 
 ## DATA
 ## On-chain Data
-- How much money people requested: mapping (address receiver => uint256).
-- The amount of money to be paid: mapping ( address receiver => uint256 ).
-- The amount of money that has already been paid for funders: mapping (address funders => uint256) 
-- The people that funded the loan: mapping (address receiver=> address lender).
+- People can request for a loan: mapping(address => Request) requested;
+- Wallet of the people getting the loan and recieve funds: mapping(address => uint) loanerWallet;
+- Wallet of the funder to recieve funds: mapping(address => uint) lenderWallet; 
+- To track the adress of loaners: mapping(address => mapping(address => uint)) loaners;
+- To track how many people has a lender funded:  address[] public lenderAccts;
+
 ## Off-chain Data
 - The reason for the loan. 
 - {requester : address,reason: string}
 
 ## FUNCTIONS
 ## Actions:
-- request(uint amount) public returns(bool);
-- fund(address to) public payable returns(bool);
-- payback() public payable returns(bool);
+- loanRequest(uint loan) public;
+- changeLoanRequestStatus() public;
+- fund(address to) public payable;
+- payBack(address to) public payable;
+- withDrawLenders() public;
+- withDrawLoaners() public;
 
 ## Getters:
-- getRequest(); 
-- getLoanAmount(address receiver) public view;
-- getLender(address receiver) public view;
+- getLoanRequestStatus() public view returns(bool); 
+- getRequestedValue(address to) public view returns(uint);
+- getFundedValue(address to) public view returns(uint);
+- getStatusRequested(address to) public view returns(bool);
+- getLenderWallet() public view returns(uint);
+- getLoannerWallet() public view returns(uint);
+- countLender() public view returns(uint);
 
 ## FLOWCHART
 - Receiver create request
