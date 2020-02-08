@@ -266,4 +266,4 @@ const ABI = [
   }
 ];
 console.log(contractABI);
-export default new web3.eth.Contract(ABI, address);
+export default new web3.eth.Contract(contractABI, address);
