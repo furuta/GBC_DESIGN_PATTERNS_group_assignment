@@ -1,0 +1,35 @@
+.MuiTab-wrapper {
+    font-size: 2rem;
+}
+
+.debt {
+    text-align: center;
+
+    p {
+        font-size: 2rem;
+        font-weight: bold;
+
+        &:after {
+            content: "";
+            display: block;
+            margin: 0 auto;
+            width: 30%;
+            padding-top: 20px;
+            border-bottom: 1px solid var(--color-grey-dark-2);
+        }
+    }
+}
+
+.fundedwallet {
+    display: flex;
+    align-items: center;
+
+    span {
+        font-size: 2rem;
+        margin-right: 1.2rem;
+    }
+}
+
+.btn--wallet {
+    margin-top: 0 !important;
+}

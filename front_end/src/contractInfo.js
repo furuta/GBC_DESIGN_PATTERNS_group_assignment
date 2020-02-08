@@ -1,38 +1,14 @@
 import web3 from "./web3";
 import contractABI from "./contracts/MicroFinance.json";
-const address = "0xC89Ce4735882C9F0f0FE26686c53074E09B0D550";
+const address = "0x5017A545b09ab9a30499DE7F431DF0855bCb7275";
 const ABI = [
   {
-    constant: true,
-    inputs: [
-      {
-        name: "",
-        type: "uint256"
-      }
-    ],
-    name: "lenderAccts",
-    outputs: [
-      {
-        name: "",
-        type: "address"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
+    constant: false,
     inputs: [],
-    name: "getFundedPeople",
-    outputs: [
-      {
-        name: "",
-        type: "address[]"
-      }
-    ],
+    name: "changeLoanRequestStatus",
+    outputs: [],
     payable: false,
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function"
   },
   {
@@ -50,48 +26,6 @@ const ABI = [
     type: "function"
   },
   {
-    constant: true,
-    inputs: [
-      {
-        name: "to",
-        type: "address"
-      }
-    ],
-    name: "getFundedValue",
-    outputs: [
-      {
-        name: "",
-        type: "uint256"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [],
-    name: "withDrawLoaners",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "getLenderWallet",
-    outputs: [
-      {
-        name: "",
-        type: "uint256"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
     constant: false,
     inputs: [
       {
@@ -100,15 +34,6 @@ const ABI = [
       }
     ],
     name: "loanRequest",
-    outputs: [],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [],
-    name: "changeLoanRequestStatus",
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
@@ -138,31 +63,12 @@ const ABI = [
     type: "function"
   },
   {
-    constant: true,
+    constant: false,
     inputs: [],
-    name: "getDebtors",
-    outputs: [
-      {
-        name: "",
-        type: "address[]"
-      }
-    ],
+    name: "withDrawLoaners",
+    outputs: [],
     payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "getLoanRequestStatus",
-    outputs: [
-      {
-        name: "",
-        type: "bool"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function"
   },
   {
@@ -181,12 +87,120 @@ const ABI = [
   },
   {
     constant: true,
+    inputs: [
+      {
+        name: "to",
+        type: "address"
+      }
+    ],
+    name: "getDebtors",
+    outputs: [
+      {
+        name: "",
+        type: "address[]"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "to",
+        type: "address"
+      }
+    ],
+    name: "getFundedPeople",
+    outputs: [
+      {
+        name: "",
+        type: "address[]"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "to",
+        type: "address"
+      }
+    ],
+    name: "getFundedValue",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "getLenderWallet",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "borrower",
+        type: "address"
+      },
+      {
+        name: "loaner",
+        type: "address"
+      }
+    ],
+    name: "getLoanerValue",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
     inputs: [],
     name: "getLoannerWallet",
     outputs: [
       {
         name: "",
         type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "getLoanRequestStatus",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
       }
     ],
     payable: false,
@@ -225,6 +239,25 @@ const ABI = [
       {
         name: "",
         type: "bool"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    name: "lenderAccts",
+    outputs: [
+      {
+        name: "",
+        type: "address"
       }
     ],
     payable: false,

@@ -26,6 +26,14 @@ function Header() {
         >
           <span>REQUEST</span>
         </NavLink>
+        <NavLink
+          to="/wallet"
+          exact
+          className="user-nav__item"
+          activeClassName="user-nav__item-active"
+        >
+          <span>WALLET</span>
+        </NavLink>
       </nav>
     </React.Fragment>
   );
