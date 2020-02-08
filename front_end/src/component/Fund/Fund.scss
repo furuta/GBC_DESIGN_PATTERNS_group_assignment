@@ -1,0 +1,102 @@
+.fund {
+    display: flex;
+    height: 30rem;
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-light-1);
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.fund_title {
+    background-color: var(--color-content-secondary);
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 1.5rem;
+}
+
+.fund_reason {
+    span {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.fund_money {
+    position: relative;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "";
+        height: 100%;
+        width: 3rem;
+        position: absolute;
+        top: 0;
+        background-color: #fbbb12;
+        left: -15px;
+        opacity: .75;
+    }
+
+    span {
+        z-index: 22;
+        color: black;
+        padding: 2rem;
+        font-size: 1.5rem;
+    }
+}
+
+.fund_btn {
+    width: 100%;
+    outline: none;
+    position: relative;
+    padding: 1.5rem;
+    background-color: var(--color-content-primary);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+    color: var(--color-grey-dark-1);
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    overflow: hidden;
+
+    span {
+        position: relative;
+        z-index: 1;
+        transition: all .5s;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 750%;
+        width: 140%;
+        background: var(--color-primary-dark);
+        -webkit-transition: all .5s ease-in-out;
+        transition: all .5s ease-in-out;
+        -webkit-transform: translateX(-90%) translateY(-10%) rotate(35deg);
+        transform: translateX(-80%) translateY(-10%) rotate(35deg);
+    }
+
+    &:hover:after {
+        -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+        transform: translateX(-9%) translateY(-35%) rotate(60deg);
+    }
+
+    &:hover span {
+        color: var(--color-white);
+    }
+}
+
+.fund-form {
+    display: flex;
+}
