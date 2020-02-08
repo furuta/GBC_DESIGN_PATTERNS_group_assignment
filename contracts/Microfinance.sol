@@ -22,6 +22,7 @@ contract MicroFinance {
 
     function loanRequest(uint256 loan) public {
         require(loan <= 2 ether, "");
+        require(loan > 0.2 ether, "");
         require(
             requested[msg.sender].fundedValue == 0,
             "you have to pay at first"
