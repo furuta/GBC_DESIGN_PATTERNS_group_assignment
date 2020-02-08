@@ -90,6 +90,9 @@ export default function Wallet() {
         initData();
       });
   };
+  const withDrawBorrower = ()=>{
+    await contractInfo.methods.withDrawLoaners().send({from: web3Context.accounts[0]})
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -113,8 +116,8 @@ export default function Wallet() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <div className="debt">
             <div className="fundedwallet">
-              <span>Funded Value: {borrowerWallet} ether</span>
-              <button className="btn btn--green btn--wallet">Claim</button>
+              <span>Funded Value: {web3.utils.fromWei(borrowerWallet,"ether")} ether</span>
+              <button className="btn btn--green btn--wallet" onClick={withDrawBorrower}>Claim</button>
             </div>
             <p>DEBT LIST</p>
             {fundedPeopleList.map(fundedPerson => (
@@ -122,7 +125,7 @@ export default function Wallet() {
                 <span>
                   {fundedPerson.address} gave {fundedPerson.price} Ether
                 </span>
-                <button className="btn btn--white">Pay</button>
+                <button className="btn btn--white" onClick={payBack}>Pay</button>
               </div>
             ))}
           </div>
