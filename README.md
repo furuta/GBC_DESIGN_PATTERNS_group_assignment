@@ -58,8 +58,8 @@ Creating a platform where funders can give out loans which are not worth the cos
 ## TYPE OF ARCHITECT
 - Hybrid 
 
-- Project Plan.
-- List of tasks
+## Project Plan.
+### List of tasks
 - Front-end
 - Back-end
 - Smart Contract
