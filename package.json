@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/furuta/GBC_DESIGN_PATTERNS_group_assignment#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^2.5.0",
+    "@openzeppelin/contracts": "^4.7.2",
     "path": "^0.12.7"
   }
 }
